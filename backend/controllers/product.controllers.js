@@ -106,3 +106,34 @@ export const getStats = async (req, res, next) => {
     next(err);
   }
 };
+
+export const getPieChartStats = async (req, res, next) => {
+  try {
+    const { month } = req.query;
+    if (!month) return ErrorHandler(res, 400, "Month can't be empty");
+
+    const query = {
+      $expr: {
+        $eq: [{ $month: "$dateOfSale" }, month],
+      },
+    };
+
+    const uniqueCategories = await Product.distinct("category").lean();
+
+    const pieChart = await Promise.all(
+      uniqueCategories.map(async (category) => {
+        const count = await Product.countDocuments({
+          ...query,
+          category,
+        });
+        return { category, count };
+      })
+    );
+
+    return SendResponse(res, 200, "Here is pie chart details", {
+      pieChart,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
