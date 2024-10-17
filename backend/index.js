@@ -42,6 +42,9 @@ await scheduleCronJob();
 
 // routes
 import appRoutes from "./routes/app.routes.js";
+import errorMiddleware from "./middlewares/error.middleware.js";
 
 // define routes
 app.use("/app/v1", appRoutes);
+
+app.use(errorMiddleware);
