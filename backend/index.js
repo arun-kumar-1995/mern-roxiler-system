@@ -39,3 +39,9 @@ await startServer();
 
 // fetch seed data
 await scheduleCronJob();
+
+// routes
+import appRoutes from "./routes/app.routes.js";
+
+// define routes
+app.use("/app/v1", appRoutes);
