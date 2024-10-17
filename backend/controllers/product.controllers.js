@@ -43,17 +43,6 @@ export const getProductTransaction = async (req, res, next) => {
       .sort({ dateOfSale: -1 })
       .lean();
 
-    // return res.status(200).json({
-    //   success: true,
-    //   message: "Here is transaction lists",
-    //   data: {
-    //     page,
-    //     perPage,
-    //     pages: totalPages,
-    //     total: totalRecords,
-    //     docs: transaction,
-    //   },
-    // });
     return SendResponse(res, 200, {
       page,
       perPage,
@@ -104,20 +93,55 @@ export const getPieChartStats = async (req, res, next) => {
     const query = req.query;
 
     const uniqueCategories = await Product.distinct("category").lean();
+    const pieChartData = [];
 
-    const pieChart = await Promise.all(
-      uniqueCategories.map(async (category) => {
-        const count = await Product.countDocuments({
-          ...query,
-          category,
-        });
-        return { category, count };
-      })
-    );
+    for (const category of uniqueCategories) {
+      const count = await Product.countDocuments({
+        ...query,
+        category,
+      });
 
+      pieChartData.push({ category, count });
+    }
     return SendResponse(res, 200, "Here is pie chart details", {
-      pieChart,
+      pieChartData,
     });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getBarChatStats = async (req, res, next) => {
+  try {
+    const query = req.query;
+    const barChartData = [];
+    const chartPriceRange = [
+      { range: "0 - 100", min: 0, max: 100 },
+      { range: "101 - 200", min: 101, max: 200 },
+      { range: "201 - 300", min: 201, max: 300 },
+      { range: "301 - 400", min: 301, max: 400 },
+      { range: "401 - 500", min: 401, max: 500 },
+      { range: "501 - 600", min: 501, max: 600 },
+      { range: "601 - 700", min: 601, max: 700 },
+      { range: "701 - 800", min: 701, max: 800 },
+      { range: "801 - 900", min: 801, max: 900 },
+      { range: "901 - above", min: 901, max: "Infinity" },
+    ];
+    for (const range of chartPriceRange) {
+      const count = await Product.countDocuments({
+        ...query,
+        price: {
+          $gte: range.min,
+          $lt: range.max === Infinity ? Infinity : range.max,
+        },
+      });
+
+      barChartData.push({
+        range: range.range,
+        count,
+      });
+    }
+    return SendResponse(res, 200, "Here is bar chart data", { barChartData });
   } catch (err) {
     next(err);
   }
