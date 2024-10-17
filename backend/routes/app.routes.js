@@ -1,4 +1,5 @@
 import express from "express";
+import checkMonth from "../middlewares/checkMonth.middleware.js";
 import {
   getProductTransaction,
   getStats,
@@ -7,7 +8,7 @@ import {
 const router = express.Router();
 
 router.route("/get-transaction").get(getProductTransaction);
-router.route("/getstats").get(getStats);
-router.route("/pie-chart-stats").get(getPieChartStats);
+router.route("/getstats").get(checkMonth, getStats);
+router.route("/pie-chart-stats").get(checkMonth, getPieChartStats);
 
 export default router;

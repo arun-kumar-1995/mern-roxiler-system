@@ -69,15 +69,7 @@ export const getProductTransaction = async (req, res, next) => {
 
 export const getStats = async (req, res, next) => {
   try {
-    const { month } = req.query;
-    if (!month) return ErrorHandler(res, 400, "Month can't be empty");
-
-    const query = {
-      $expr: {
-        $eq: [{ $month: "$dateOfSale" }, month],
-      },
-    };
-
+    const query = req.query;
     const priceDocs = await Product.find({ ...query, sold: true })
       .select("price dateOfSale sold")
       .lean();
@@ -109,14 +101,7 @@ export const getStats = async (req, res, next) => {
 
 export const getPieChartStats = async (req, res, next) => {
   try {
-    const { month } = req.query;
-    if (!month) return ErrorHandler(res, 400, "Month can't be empty");
-
-    const query = {
-      $expr: {
-        $eq: [{ $month: "$dateOfSale" }, month],
-      },
-    };
+    const query = req.query;
 
     const uniqueCategories = await Product.distinct("category").lean();
 
