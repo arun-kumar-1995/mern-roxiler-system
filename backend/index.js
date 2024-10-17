@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv/config";
 import cors from "cors";
 import connectDB from "./configs/db.configs.js";
+import scheduleCronJob from "./services/cronJob/cronJob.services.js";
 const app = express();
 
 const { PORT = 8000 } = process.env;
@@ -35,3 +36,6 @@ const startServer = async () => {
 };
 
 await startServer();
+
+// fetch seed data
+await scheduleCronJob();
