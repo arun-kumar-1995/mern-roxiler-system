@@ -66,3 +66,43 @@ export const getProductTransaction = async (req, res, next) => {
     next(err);
   }
 };
+
+export const getStats = async (req, res, next) => {
+  try {
+    const { month } = req.query;
+    if (!month) return ErrorHandler(res, 400, "Month can't be empty");
+
+    const query = {
+      $expr: {
+        $eq: [{ $month: "$dateOfSale" }, month],
+      },
+    };
+
+    const priceDocs = await Product.find({ ...query, sold: true })
+      .select("price dateOfSale sold")
+      .lean();
+
+    const totalSales = priceDocs.reduce(
+      (sum, product) => sum + product.price,
+      0
+    );
+
+    const totalSoldItems = await Product.countDocuments({
+      ...query,
+      sold: true,
+    });
+
+    const totalUnSoldItems = await Product.countDocuments({
+      ...query,
+      sold: false,
+    });
+
+    return SendResponse(res, 200, "Here is statics", {
+      totalSales,
+      totalSoldItems,
+      totalUnSoldItems,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
