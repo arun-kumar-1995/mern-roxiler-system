@@ -1,6 +1,7 @@
 import React, { useState, memo, useMemo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { IoStatsChart } from "react-icons/io5";
+import SelectInput from "./common/SelectInput";
 
 const Header = () => {
   const [searchText, setSearchText] = useState("");
@@ -77,19 +78,6 @@ const Header = () => {
       { value: "200", label: "200" },
       { value: "300", label: "300" },
     ];
-  }, []);
-
-  const SelectInput = memo(({ label, id, options, value, onChange }) => {
-    return (
-      <div className="select-input">
-        <label htmlFor="month">{label}</label>
-        <select name={id} id={id} value={value} onChange={onChange}>
-          {options.map((option) => (
-            <option value={option.value}>{option.label}</option>
-          ))}
-        </select>
-      </div>
-    );
   }, []);
 
   return (
