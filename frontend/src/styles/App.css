@@ -1,0 +1,102 @@
+/* -----header-------- */
+
+header {
+  padding: 0.8rem 1.6rem;
+  background-color: #fcfcfc;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.header-logo {
+  flex: 1;
+}
+
+.header-section {
+  margin: 0 2.4em;
+}
+.header-logo a {
+  color: #211312;
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+
+.header-container label {
+  color: #211312;
+  font-size: 1.4rem;
+  margin-right: 0.4em;
+}
+
+a.btn-stats {
+  border: 1px solid;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.4rem;
+}
+
+a.btn-stats span {
+  color: #211312;
+  font-size: 1.4rem;
+}
+a.btn-stats svg {
+  margin-left: 0.4em;
+  font-size: 1.2rem;
+}
+
+.search input {
+  outline: 1px solid #d9d9d9;
+  padding: 1rem;
+  border-radius: 0.2rem;
+  text-indent: 0.4rem;
+  min-width: 28rem;
+}
+.search input:focus {
+  outline: 1px solid #2391da;
+}
+
+.header-container select {
+  padding: 0.4rem;
+  cursor: pointer;
+  border-radius: 0.2rem;
+  border: none;
+  outline: 1px solid #211312;
+}
+.header-container select:focus {
+  outline: 1px solid #2391da;
+}
+.price-filter {
+  display: flex;
+  gap: 1.2rem;
+}
+/* ---- side nav ------*/
+
+.sidenav {
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 99;
+}
+
+.sidenav nav {
+  height: 100vh;
+  background-color: #fcfcfc;
+  box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.12);
+  width: 7.2rem;
+}
+
+.sidenav nav a {
+  display: block;
+  width: 100%;
+  font-size: 2.2rem;
+  padding: 1rem 2rem;
+  color: #696969;
+  border-radius: 0.4rem;
+}
+
+.sidenav nav a.active,
+.sidenav nav a:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}

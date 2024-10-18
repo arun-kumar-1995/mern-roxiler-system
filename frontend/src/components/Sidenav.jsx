@@ -5,14 +5,16 @@ import { IoStatsChart } from "react-icons/io5";
 
 const Sidenav = () => {
   return (
-    <nav>
-      <Link to="/">
-        <MdOutlineHome />
-      </Link>
-      <Link to="/stats">
-        <IoStatsChart />
-      </Link>
-    </nav>
+    <div className="sidenav">
+      <nav>
+        <Link to="/" title="home">
+          <MdOutlineHome />
+        </Link>
+        <Link to="/stats" title="go stats">
+          <IoStatsChart />
+        </Link>
+      </nav>
+    </div>
   );
 };
 
