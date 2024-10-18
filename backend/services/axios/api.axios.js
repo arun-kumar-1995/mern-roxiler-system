@@ -17,5 +17,9 @@ export const getRequest = async (endpoint) => {
         `Error ${err.response.status}: ${err.response.data.message}`
       );
     }
+    if (err.request) {
+      console.error("No response received from server", err.message);
+    }
+    console.error("Error in request setup", err.message);
   }
 };
