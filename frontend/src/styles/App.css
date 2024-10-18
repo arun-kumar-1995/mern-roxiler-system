@@ -2,7 +2,6 @@
 
 header {
   padding: 0.8rem 1.6rem;
-  background-color: #fcfcfc;
 }
 
 .header-container {
@@ -51,13 +50,14 @@ a.btn-stats svg {
   border-radius: 0.2rem;
   text-indent: 0.4rem;
   min-width: 28rem;
+  background-color: #fff;
 }
 .search input:focus {
   outline: 1px solid #2391da;
 }
 
 .header-container select {
-  padding: 0.4rem;
+  padding: 0.6rem;
   cursor: pointer;
   border-radius: 0.2rem;
   border: none;

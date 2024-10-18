@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useMemo } from "react";
 import "../styles/Home.css";
 import SelectInput from "../components/common/SelectInput";
 import Button from "../components/common/Button";
@@ -15,9 +15,19 @@ const Home = () => {
     setPagePage(e.target.value);
   }, []);
 
-  const pageValue = [1, 2, 3, 4, 5];
+  const pageValue = useMemo(() => {
+    return Array.from({ length: 10 }, (_, index) => ({
+      value: index + 1,
+      label: index + 1,
+    }));
+  }, []);
 
-  const perPageValue = [10, 20, 30, 40, 50];
+  const perPageValue = useMemo(() => {
+    return Array.from({ length: 10 }, (_, index) => ({
+      value: (index + 1) * 10,
+      label: (index + 1) * 10,
+    }));
+  }, []);
 
   return (
     <div className="transaction-container">

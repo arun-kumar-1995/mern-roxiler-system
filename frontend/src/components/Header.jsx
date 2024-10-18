@@ -6,8 +6,8 @@ import SelectInput from "./common/SelectInput";
 const Header = () => {
   const [searchText, setSearchText] = useState("");
   const [selectedMonth, setSelectedMonth] = useState(3);
-  const [minPrice, setMinPrice] = useState("");
-  const [maxPrice, setMaxPrice] = useState("");
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(0);
 
   const handleSearchChange = useCallback((e) => {
     setSearchText(e.target.value);
@@ -73,11 +73,10 @@ const Header = () => {
   }, []);
 
   const priceOptions = useMemo(() => {
-    return [
-      { value: "100", label: "100" },
-      { value: "200", label: "200" },
-      { value: "300", label: "300" },
-    ];
+    return Array.from({ length: 5 }, (_, index) => ({
+      value: (index + 1) * 5,
+      label: (index + 1) * 5,
+    }));
   }, []);
 
   return (
