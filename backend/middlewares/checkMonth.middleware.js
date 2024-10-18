@@ -9,6 +9,7 @@ const checkMonth = (req, res, next) => {
     },
   };
   req.query = query;
+  req.month = month;
   next();
 };
 

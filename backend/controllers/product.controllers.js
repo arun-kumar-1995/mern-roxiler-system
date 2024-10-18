@@ -1,7 +1,8 @@
 import Product from "../models/product.models.js";
+import { getRequest } from "../services/axios/api.axios.js";
 import ErrorHandler from "../utils/errorHandler.utils.js";
 import SendResponse from "../utils/sendResponse.utils.js";
-
+import axios from "axios";
 // Default pagination values
 const DEFAULT_PAGE = 1;
 const DEFAULT_PER_PAGE = 10;
@@ -142,6 +143,23 @@ export const getBarChatStats = async (req, res, next) => {
       });
     }
     return SendResponse(res, 200, "Here is bar chart data", { barChartData });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getCombinedStats = async (req, res, next) => {
+  try {
+    let month = Number(req.month);
+    const pieChart = await getRequest(`/app/v1/pie-chart-stats?month=${month}`);
+    const barGraph = await getRequest(`/app/v1/bar-chart-stats?month=${month}`);
+    const stats = await getRequest(`/app/v1/getstats?month=${month}`);
+
+    return SendResponse(res, 200, "Here is combined result", {
+      pieChart: pieChart.data,
+      barGraph: barGraph.data,
+      stats: stats.data,
+    });
   } catch (err) {
     next(err);
   }
