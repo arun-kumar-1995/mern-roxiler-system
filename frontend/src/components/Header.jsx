@@ -2,20 +2,24 @@ import React, { useState, memo, useMemo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { IoStatsChart } from "react-icons/io5";
 import SelectInput from "./common/SelectInput";
+import { useAppContext } from "../contexts/AppContext";
 
 const Header = () => {
-  const [searchText, setSearchText] = useState("");
-  const [selectedMonth, setSelectedMonth] = useState(3);
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(0);
+  const {
+    searchText,
+    setSearchText,
+    selectedMonth,
+    setSelectedMonth,
+    priceRange,
+    setPriceRange,
+  } = useAppContext();
 
   const handleSearchChange = (e) => setSearchText(e.target.value);
-
   const handleMonthChange = (e) => setSelectedMonth(e.target.value);
 
-  const handleMinPriceChange = (e) => setMinPrice(e.target.value);
-
-  const handleMaxPriceChange = (e) => setMaxPrice(e.target.value);
+  const handlePriceChange = (e, field) => {
+    setPriceRange((prev) => ({ ...prev, [field]: e.target.value }));
+  };
 
   const HeaderLogo = () => {
     return (
@@ -62,7 +66,13 @@ const Header = () => {
     { value: "12", label: "December" },
   ];
 
-  const priceOptions = [{ value: 1, label: 1 }];
+  const priceOptions = useMemo(() => {
+    return Array.from({ length: 25 }, (_, index) => ({
+      value: (index + 1) * 10,
+      label: (index + 1) * 10,
+    }));
+  }, []);
+
   return (
     <header>
       <div className="header-container">
@@ -82,17 +92,17 @@ const Header = () => {
         <div className="price-filter header-section">
           <SelectInput
             label="Min price"
-            id="min-price"
-            value={minPrice}
-            onChange={handleMinPriceChange}
+            id="minPrice"
+            value={priceRange.minPrice}
+            onChange={handlePriceChange}
             options={priceOptions}
           />
 
           <SelectInput
             label="Max price"
-            id="max-price"
-            value={maxPrice}
-            onChange={handleMaxPriceChange}
+            id="maxPrice"
+            value={priceRange.maxPrice}
+            onChange={handlePriceChange}
             options={priceOptions}
           />
         </div>

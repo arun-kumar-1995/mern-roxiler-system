@@ -5,7 +5,11 @@ import Button from "../components/common/Button";
 import API from "../Api";
 import Loader from "../components/common/Loader";
 import { useToast } from "../contexts/ToastContext";
-const Home = ({ minPrice = 0, maxPrice, month, searchText = "" }) => {
+import { useAppContext } from "../contexts/AppContext";
+
+const Home = () => {
+  const { searchText, selectedMonth, priceRange } = useAppContext();
+
   const { onSuccess, onError } = useToast();
   const [loading, setIsLoading] = useState(false);
   const [pageData, setPageData] = useState({
@@ -53,7 +57,7 @@ const Home = ({ minPrice = 0, maxPrice, month, searchText = "" }) => {
       setIsLoading(true);
       try {
         const response = await API.get(
-          `/get-transaction?page=${pageData.page}&perPage=${pageData.perPage}`
+          `/get-transaction?page=${pageData.page}&perPage=${pageData.perPage}&month=${selectedMonth}&search=${searchText}&p_min=${priceRange.minPrice}&p_max=${priceRange.maxPrice}`
         );
         if (response.status === 200) {
           const seedData = response.data.data;
@@ -68,7 +72,14 @@ const Home = ({ minPrice = 0, maxPrice, month, searchText = "" }) => {
     };
 
     fetchSeedData();
-  }, [pageData.page, pageData.perPage, searchText, month]);
+  }, [
+    pageData.page,
+    pageData.perPage,
+    searchText,
+    selectedMonth,
+    priceRange.minPrice,
+    priceRange.maxPrice,
+  ]);
 
   return (
     <Fragment>
