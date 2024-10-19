@@ -6,6 +6,7 @@ import Loader from "./components/common/Loader";
 import AppProvider from "./contexts/AppContext";
 
 const Home = lazy(() => import("./pages/Home"));
+const Stats = lazy(() => import("./pages/Stats"));
 
 const App = () => {
   return (
@@ -19,6 +20,14 @@ const App = () => {
               element={
                 <AppLayout>
                   <Home />
+                </AppLayout>
+              }
+            />
+            <Route
+              path="/stats"
+              element={
+                <AppLayout>
+                  <Stats />
                 </AppLayout>
               }
             />
