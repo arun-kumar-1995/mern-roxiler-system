@@ -3,7 +3,7 @@ const SelectInput = ({ label, id, options, value, onChange }) => {
   return (
     <div className="select-input">
       <label htmlFor={id}>{label}</label>
-      <select name={id} id={id} value={value} onChange={onChange}>
+      <select name={id} id={id} value={value} onChange={(e) => onChange(e, id)}>
         {options.map((option, index) => (
           <option key={index} value={option.value}>
             {option.label}
@@ -12,6 +12,6 @@ const SelectInput = ({ label, id, options, value, onChange }) => {
       </select>
     </div>
   );
-}
+};
 
 export default SelectInput;

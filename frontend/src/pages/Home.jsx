@@ -5,7 +5,7 @@ import Button from "../components/common/Button";
 import API from "../Api";
 import Loader from "../components/common/Loader";
 import { useToast } from "../contexts/ToastContext";
-const Home = () => {
+const Home = ({ minPrice = 0, maxPrice, month, searchText = "" }) => {
   const { onSuccess, onError } = useToast();
   const [loading, setIsLoading] = useState(false);
   const [pageData, setPageData] = useState({
@@ -17,20 +17,29 @@ const Home = () => {
   });
 
   // handles
-  const handlePageChange = (e) => {};
+  const handlePageChange = (e, field) => {
+    setPageData((prev) => ({ ...prev, [field]: e.target.value }));
+  };
 
-  const handlePerPageChange = (e) => {};
+  const handlePageIncrement = () => {
+    const MAX_PAGE = pageData.pages;
+    setPageData((prev) => {
+      if (prev.page === MAX_PAGE) return prev;
+      return { ...prev, page: prev.page + 1 };
+    });
+  };
 
-  const handlePageIncrement = () => {};
-
-  const handlePageDecrement = () => {};
+  const handlePageDecrement = () => {
+    if (pageData.page == 1) return;
+    setPageData((prev) => ({ ...prev, page: prev.page - 1 }));
+  };
 
   const pageValue = useMemo(() => {
     return Array.from({ length: pageData.pages || 5 }, (_, index) => ({
       value: index + 1,
       label: index + 1,
     }));
-  }, []);
+  }, [pageData.pages]);
 
   const perPageValue = useMemo(() => {
     return Array.from({ length: 10 }, (_, index) => ({
@@ -43,7 +52,9 @@ const Home = () => {
     const fetchSeedData = async () => {
       setIsLoading(true);
       try {
-        const response = await API.get(`/get-transaction?month=${1}`);
+        const response = await API.get(
+          `/get-transaction?page=${pageData.page}&perPage=${pageData.perPage}`
+        );
         if (response.status === 200) {
           const seedData = response.data.data;
           console.log(seedData);
@@ -57,7 +68,7 @@ const Home = () => {
     };
 
     fetchSeedData();
-  }, [pageData.page, pageData.perPage]);
+  }, [pageData.page, pageData.perPage, searchText, month]);
 
   return (
     <Fragment>
@@ -108,9 +119,9 @@ const Home = () => {
 
           <SelectInput
             label="Per Page"
-            id="per-page"
+            id="perPage"
             value={pageData.perPage}
-            onChange={handlePerPageChange}
+            onChange={handlePageChange}
             options={perPageValue}
           />
 

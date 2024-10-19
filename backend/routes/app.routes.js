@@ -6,7 +6,7 @@ import {
   getStats,
   getPieChartStats,
   getBarChatStats,
-  getCombinedStats
+  getCombinedStats,
 } from "../controllers/product.controllers.js";
 
 const router = express.Router();
@@ -15,6 +15,6 @@ router.route("/get-transaction").get(getProductTransaction);
 router.route("/getstats").get(checkMonth, getStats);
 router.route("/pie-chart-stats").get(checkMonth, getPieChartStats);
 router.route("/bar-chart-stats").get(checkMonth, getBarChatStats);
-router.route("/combined-stats").get(checkMonth , getCombinedStats);
+router.route("/combined-stats").get(checkMonth, getCombinedStats);
 
 export default router;
