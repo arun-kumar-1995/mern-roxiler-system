@@ -6,24 +6,27 @@ import API from "../Api";
 import Loader from "../components/common/Loader";
 import { useToast } from "../contexts/ToastContext";
 const Home = () => {
-  const [loading, setIsLoading] = useState(false);
-  const [transactionData, setTransactionData] = useState([]);
-  const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(10);
-
   const { onSuccess, onError } = useToast();
+  const [loading, setIsLoading] = useState(false);
+  const [pageData, setPageData] = useState({
+    page: 1,
+    perPage: 10,
+    pages: "",
+    total: "",
+    docs: [],
+  });
 
   // handles
-  const handlePageChange = (e) => setPage(e.target.value);
+  const handlePageChange = (e) => {};
 
-  const handlePerPageChange = (e) => setPerPage(e.target.value);
+  const handlePerPageChange = (e) => {};
 
-  const handlePageIncrement = () => setPage((prev) => prev + 1);
+  const handlePageIncrement = () => {};
 
-  const handlePageDecrement = () => setPage((next) => next - 1);
+  const handlePageDecrement = () => {};
 
   const pageValue = useMemo(() => {
-    return Array.from({ length: 10 }, (_, index) => ({
+    return Array.from({ length: pageData.pages || 5 }, (_, index) => ({
       value: index + 1,
       label: index + 1,
     }));
@@ -44,7 +47,7 @@ const Home = () => {
         if (response.status === 200) {
           const seedData = response.data.data;
           console.log(seedData);
-          setTransactionData(seedData);
+          setPageData(seedData);
           setIsLoading(false);
         }
       } catch (err) {
@@ -54,7 +57,7 @@ const Home = () => {
     };
 
     fetchSeedData();
-  }, [page, perPage]);
+  }, [pageData.page, pageData.perPage]);
 
   return (
     <Fragment>
@@ -73,17 +76,24 @@ const Home = () => {
           </thead>
 
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>Product 1</td>
-              <td>Lorem ipsum dolor sit amet</td>
-              <td>$100</td>
-              <td>Electronics</td>
-              <td>Yes</td>
-              <td>
-                <img src="image_url" alt="Product" className="product-image" />
-              </td>
-            </tr>
+            {pageData.docs &&
+              pageData.docs.map((doc) => (
+                <tr key={doc._id}>
+                  <td>{doc.id}</td>
+                  <td>{doc.title}</td>
+                  <td>{doc.description}</td>
+                  <td>${doc.price}</td>
+                  <td>{doc.category}</td>
+                  <td>{doc.sold ? "Yes" : "No"}</td>
+                  <td>
+                    <img
+                      src={doc.image}
+                      alt="Product"
+                      className="product-image"
+                    />
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
 
@@ -91,7 +101,7 @@ const Home = () => {
           <SelectInput
             label="Page"
             id="page"
-            value={page}
+            value={pageData.page}
             onChange={handlePageChange}
             options={pageValue}
           />
@@ -99,12 +109,12 @@ const Home = () => {
           <SelectInput
             label="Per Page"
             id="per-page"
-            value={perPage}
+            value={pageData.perPage}
             onChange={handlePerPageChange}
             options={perPageValue}
           />
 
-          <h3>Total :{60}</h3>
+          <h3>Total :{pageData.total}</h3>
 
           <Button
             className="btn btn-prev"

@@ -41,7 +41,7 @@ export const getProductTransaction = async (req, res, next) => {
     const transaction = await Product.find(query)
       .limit(perPage)
       .skip(skip)
-      .sort({ dateOfSale: -1 })
+      .sort({ id: 1 })
       .lean();
 
     return SendResponse(res, 200, "Here is transaction", {

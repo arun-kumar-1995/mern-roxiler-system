@@ -1,7 +1,9 @@
 /* Container styles */
 .transaction-container {
   padding: 0 2rem;
-  margin-top: 4em;
+  margin-top: 3.2em;
+  height: 76vh;
+  overflow-y: auto;
 }
 
 .styled-table {
@@ -26,8 +28,8 @@
   font-size: 1.25rem;
 }
 
-.styled-table td{
- padding: 0.6rem 1.6rem;
+.styled-table td {
+  padding: 0.6rem 1.6rem;
 }
 
 /* Image styling */
