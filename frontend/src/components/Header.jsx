@@ -9,21 +9,13 @@ const Header = () => {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
 
-  const handleSearchChange = useCallback((e) => {
-    setSearchText(e.target.value);
-  }, []);
+  const handleSearchChange = (e) => setSearchText(e.target.value);
 
-  const handleMonthChange = useCallback((e) => {
-    setSelectedMonth(e.target.value);
-  }, []);
+  const handleMonthChange = (e) => setSelectedMonth(e.target.value);
 
-  const handleMinPriceChange = useCallback((e) => {
-    setMinPrice(e.target.value);
-  }, []);
+  const handleMinPriceChange = (e) => setMinPrice(e.target.value);
 
-  const handleMaxPriceChange = useCallback((e) => {
-    setMaxPrice(e.target.value);
-  }, []);
+  const handleMaxPriceChange = (e) => setMaxPrice(e.target.value);
 
   const HeaderLogo = () => {
     return (
@@ -55,30 +47,22 @@ const Header = () => {
     );
   };
 
-  const monthOptions = useMemo(() => {
-    return [
-      { value: "1", label: "January" },
-      { value: "2", label: "February" },
-      { value: "3", label: "March" },
-      { value: "4", label: "April" },
-      { value: "5", label: "May" },
-      { value: "6", label: "June" },
-      { value: "7", label: "July" },
-      { value: "8", label: "August" },
-      { value: "9", label: "September" },
-      { value: "10", label: "October" },
-      { value: "11", label: "November" },
-      { value: "12", label: "December" },
-    ];
-  }, []);
+  const monthOptions = [
+    { value: "1", label: "January" },
+    { value: "2", label: "February" },
+    { value: "3", label: "March" },
+    { value: "4", label: "April" },
+    { value: "5", label: "May" },
+    { value: "6", label: "June" },
+    { value: "7", label: "July" },
+    { value: "8", label: "August" },
+    { value: "9", label: "September" },
+    { value: "10", label: "October" },
+    { value: "11", label: "November" },
+    { value: "12", label: "December" },
+  ];
 
-  const priceOptions = useMemo(() => {
-    return Array.from({ length: 5 }, (_, index) => ({
-      value: (index + 1) * 5,
-      label: (index + 1) * 5,
-    }));
-  }, []);
-
+  const priceOptions = [{ value: 1, label: 1 }];
   return (
     <header>
       <div className="header-container">

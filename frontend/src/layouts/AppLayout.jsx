@@ -1,5 +1,4 @@
 import React from "react";
-import Sidenav from "../components/Sidenav";
 import "../styles/App.css";
 
 const AppLayout = ({ children }) => {

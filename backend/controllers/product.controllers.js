@@ -44,7 +44,7 @@ export const getProductTransaction = async (req, res, next) => {
       .sort({ dateOfSale: -1 })
       .lean();
 
-    return SendResponse(res, 200, {
+    return SendResponse(res, 200, "Here is transaction", {
       page,
       perPage,
       pages: totalPages,
