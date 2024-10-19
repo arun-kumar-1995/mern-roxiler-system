@@ -44,6 +44,18 @@ a.btn-stats svg {
   font-size: 1.2rem;
 }
 
+.header-container .input-text {
+  display: flex;
+  align-items: center;
+}
+.header-container .input-text input {
+  width: 8rem;
+  border: 1px solid #211312;
+  padding: 0.8rem;
+  text-align: center;
+  border-radius: 0.4rem;
+}
+
 .search input {
   outline: 1px solid #d9d9d9;
   padding: 1rem;

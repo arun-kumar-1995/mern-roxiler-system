@@ -59,19 +59,15 @@ const Statistics = ({ data, statsMonth, handleStatsMonth }) => {
 
 const BarGraph = ({ data, barMonth, handleBarMonth }) => {
   if (!data) return <div>loading ..</div>;
-  console.log(data);
   const maxCount = Math.max(...data.barChartData.map((item) => item.count));
-  console.log(maxCount);
+  const step = 5;
 
-  // dynamic create array items
-
-  const steps = 2;
+  // Y-axis labels calculation
   const yAxisLabels = Array.from(
-    { length: maxCount / steps + 1 },
-    (_, index) => maxCount - index * steps
+    { length: Math.ceil(maxCount / step) },
+    (_, index) => maxCount - index * step
   );
 
-  console.log(yAxisLabels);
   return (
     <div className="bar-graph statitics">
       <div className="stats-header">

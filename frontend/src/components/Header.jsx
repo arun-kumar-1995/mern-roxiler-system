@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { IoStatsChart } from "react-icons/io5";
 import SelectInput from "./common/SelectInput";
 import { useAppContext } from "../contexts/AppContext";
+import InputText from "./common/InputText";
 
 const Header = () => {
   const {
@@ -18,6 +19,7 @@ const Header = () => {
   const handleMonthChange = (e) => setSelectedMonth(e.target.value);
 
   const handlePriceChange = (e, field) => {
+    console.log(field)
     setPriceRange((prev) => ({ ...prev, [field]: e.target.value }));
   };
 
@@ -66,13 +68,6 @@ const Header = () => {
     { value: "12", label: "December" },
   ];
 
-  const priceOptions = useMemo(() => {
-    return Array.from({ length: 25 }, (_, index) => ({
-      value: (index + 1) * 10,
-      label: (index + 1) * 10,
-    }));
-  }, []);
-
   return (
     <header>
       <div className="header-container">
@@ -90,20 +85,17 @@ const Header = () => {
         />
 
         <div className="price-filter header-section">
-          <SelectInput
-            label="Min price"
+          <InputText
             id="minPrice"
+            label="Min Price"
             value={priceRange.minPrice}
             onChange={handlePriceChange}
-            options={priceOptions}
           />
-
-          <SelectInput
-            label="Max price"
+          <InputText
             id="maxPrice"
+            label="Max Price"
             value={priceRange.maxPrice}
             onChange={handlePriceChange}
-            options={priceOptions}
           />
         </div>
 
