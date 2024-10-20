@@ -15,11 +15,22 @@ const Header = () => {
     setPriceRange,
   } = useAppContext();
 
-  const handleSearchChange = (e) => setSearchText(e.target.value);
-  const handleMonthChange = (e) => setSelectedMonth(e.target.value);
+  const handleSearchChange = useCallback(
+    (e) => {
+      setSearchText(e.target.value);
+    },
+    [searchText]
+  );
+
+  const handleMonthChange = useCallback(
+    (e) => {
+      setSelectedMonth(e.target.value);
+    },
+    [selectedMonth]
+  );
 
   const handlePriceChange = (e, field) => {
-    console.log(field)
+    console.log(field);
     setPriceRange((prev) => ({ ...prev, [field]: e.target.value }));
   };
 
@@ -53,20 +64,23 @@ const Header = () => {
     );
   };
 
-  const monthOptions = [
-    { value: "1", label: "January" },
-    { value: "2", label: "February" },
-    { value: "3", label: "March" },
-    { value: "4", label: "April" },
-    { value: "5", label: "May" },
-    { value: "6", label: "June" },
-    { value: "7", label: "July" },
-    { value: "8", label: "August" },
-    { value: "9", label: "September" },
-    { value: "10", label: "October" },
-    { value: "11", label: "November" },
-    { value: "12", label: "December" },
-  ];
+  const monthOptions = useMemo(
+    () => [
+      { value: "1", label: "January" },
+      { value: "2", label: "February" },
+      { value: "3", label: "March" },
+      { value: "4", label: "April" },
+      { value: "5", label: "May" },
+      { value: "6", label: "June" },
+      { value: "7", label: "July" },
+      { value: "8", label: "August" },
+      { value: "9", label: "September" },
+      { value: "10", label: "October" },
+      { value: "11", label: "November" },
+      { value: "12", label: "December" },
+    ],
+    []
+  );
 
   return (
     <header>

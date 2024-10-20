@@ -6,6 +6,7 @@ import API from "../Api";
 import Loader from "../components/common/Loader";
 import { useToast } from "../contexts/ToastContext";
 import { useAppContext } from "../contexts/AppContext";
+import useQueryBuilder from "../utils/queryBuilder.jsx";
 
 const Home = () => {
   const { searchText, selectedMonth, priceRange } = useAppContext();
@@ -52,13 +53,16 @@ const Home = () => {
     }));
   }, []);
 
+  const query = useQueryBuilder(
+    "/get-transaction?",
+    pageData.page,
+    pageData.perPage
+  );
   useEffect(() => {
     const fetchSeedData = async () => {
       setIsLoading(true);
       try {
-        const response = await API.get(
-          `/get-transaction?page=${pageData.page}&perPage=${pageData.perPage}&month=${selectedMonth}&search=${searchText}&p_min=${priceRange.minPrice}&p_max=${priceRange.maxPrice}`
-        );
+        const response = await API.get(query);
         if (response.status === 200) {
           const seedData = response.data.data;
           console.log(seedData);
